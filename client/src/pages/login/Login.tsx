@@ -14,8 +14,8 @@ const schema = Joi.object({
 const Login: React.FC = () => {
     const {
         control,
-        handleSubmit,
         formState: { errors },
+        handleSubmit,
     } = useForm<ILogin>({
         resolver: joiResolver(schema),
     });

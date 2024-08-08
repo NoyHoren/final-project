@@ -1,33 +1,46 @@
-import React from 'react';
-import { Box, Button, TextField, Typography, Grid } from '@mui/material';
+import React, { useContext } from 'react';
+import { Box, Button, TextField, Typography, Grid, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { IUserInput } from '../../interfaces/interfaces';
+import { AuthContext, AuthContextType } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*-])[A-Za-z\d!@#$%^&*-]{7,20}$/;
+const phoneRegex = /^((\+972|0)([23489]|5[02468]|77)-?[1-9]\d{6})$/;
 
 // Define the validation schema using Joi
-const schema = Joi.object({
-    name: Joi.object({
-        first: Joi.string().required().label('First Name'),
-        middle: Joi.string().allow('').label('Middle Name'),
-        last: Joi.string().required().label('Last Name'),
-    }),
-    address: Joi.object({
-        country: Joi.string().required().label('Country'),
-        state: Joi.string().required().label('State'),
-        city: Joi.string().required().label('City'),
-        street: Joi.string().required().label('Street'),
-        zip: Joi.string().required().label('ZIP Code'),
-        houseNumber: Joi.number().required().label('House Number'),
-    }),
-    image: Joi.object({
-        url: Joi.string().uri().required().label('Image URL'),
-        alt: Joi.string().required().label('Image Alt Text'),
-    }).optional(),
-    email: Joi.string().email({ tlds: { allow: false } }).required().label('Email'),
-    password: Joi.string().required().label('Password'),
-    phone: Joi.string().required().label('Phone Number'),
+const addressSchema = Joi.object({
+    city: Joi.string().min(2).max(50).required().label('City'),
+    country: Joi.string().min(2).max(50).required().label('Country'),
+    houseNumber: Joi.number().required().label('House Number'),
+    street: Joi.string().min(2).max(50).required().label('Street'),
+    zip: Joi.string().min(2).max(10).required().label('ZIP Code'),
+    state: Joi.string().min(2).max(50).label('State'),
+});
+
+const imageSchema = Joi.object({
+    url: Joi.string().uri().required().label('Image URL'),
+    alt: Joi.string().min(2).max(50).required().label('Image Alt Text'),
+}).optional();
+
+const userSchema = Joi.object({
     isBusiness: Joi.boolean().required().label('Is Business'),
+    email: Joi.string().email({ tlds: { allow: false } }).required().label('Email'),
+    phone: Joi.string().pattern(phoneRegex).required().label('Phone Number'),
+    password: Joi.string().pattern(passwordRegex).required().label('Password'),
+
+    address: addressSchema.required(),
+    name: Joi.object({
+        first: Joi.string().min(2).max(50).required().label('First Name'),
+        middle: Joi.string().allow('').min(0).label('Middle Name'),
+        last: Joi.string().min(2).max(50).required().label('Last Name'),
+    }).required(),
+
+    image: imageSchema,
 });
 
 const Signup: React.FC = () => {
@@ -36,12 +49,18 @@ const Signup: React.FC = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<IUserInput>({
-        resolver: joiResolver(schema),
+        resolver: joiResolver(userSchema),
     });
 
-    const onSubmit = (data: IUserInput) => {
-        // Handle form submission
-        console.log(data);
+    const { handleSignup } = useContext(AuthContext) as AuthContextType;
+    const navigate = useNavigate();
+
+    const onSubmit = async (data: IUserInput) => {
+        const success = await handleSignup(data);
+        if (success) {
+            toast.success("user signed up successfully");
+            navigate("/login")
+        }
     };
 
     return (
@@ -271,13 +290,18 @@ const Signup: React.FC = () => {
                         name="isBusiness"
                         control={control}
                         render={({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Is Business"
-                                error={!!errors.isBusiness}
-                                helperText={errors.isBusiness ? errors.isBusiness.message : ''}
-                                fullWidth
-                            />
+                            <Box>
+                                <FormLabel component="legend">Is Business</FormLabel>
+                                <RadioGroup {...field} row>
+                                    <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                    <FormControlLabel value={false} control={<Radio />} label="No" />
+                                </RadioGroup>
+                                {errors.isBusiness && (
+                                    <Typography variant="body2" color="error">
+                                        {errors.isBusiness.message}
+                                    </Typography>
+                                )}
+                            </Box>
                         )}
                     />
                 </Grid>

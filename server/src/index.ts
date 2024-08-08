@@ -21,7 +21,6 @@ app.use(logger);
 app.use(cors({ origin: "*" }))
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/cards", cardsRouter);
-app.use(express.static("public"))
 
 app.use(errorHandler);
 app.use(notFound);
