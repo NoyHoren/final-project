@@ -50,6 +50,9 @@ const Signup: React.FC = () => {
         formState: { errors },
     } = useForm<IUserInput>({
         resolver: joiResolver(userSchema),
+        defaultValues: {
+            isBusiness: false,
+        },
     });
 
     const { handleSignup } = useContext(AuthContext) as AuthContextType;

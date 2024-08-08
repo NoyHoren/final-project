@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Button, TextField, Typography, Grid } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { ILogin } from '../../interfaces/interfaces';
+import { AuthContext, AuthContextType } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 // Define the validation schema using Joi
 const schema = Joi.object({
@@ -19,10 +22,16 @@ const Login: React.FC = () => {
     } = useForm<ILogin>({
         resolver: joiResolver(schema),
     });
+    const navigate = useNavigate();
 
-    const onSubmit = (data: ILogin) => {
-        // Handle form submission
-        console.log(data);
+    const { handleLogin } = useContext(AuthContext) as AuthContextType;
+
+    const onSubmit = async (data: ILogin) => {
+        const success = await handleLogin(data);
+        if (success) {
+            toast.success("logged in successfully");
+            navigate("/");
+        }
     };
 
     return (
