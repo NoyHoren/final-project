@@ -32,6 +32,7 @@ export interface IUserInput {
 export interface IUser extends IUserInput {
     createdAt: Date;
     isAdmin: boolean;
+    _id: string
 };
 
 export interface ILogin {

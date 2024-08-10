@@ -89,8 +89,13 @@ router.delete("/:id", ...isAdminOrSelf, validateToken, async (req, res, next) =>
 
     try {
         await cardService.deleteCard(req.params.id);
+        const cards = await cardService.getUserCards(req.payload._id);
+        if (!cards) {
+            Logger.error("No ID provided");
+            throw new BizCardsError(400, "No ID provided");
+        }
 
-        res.json("Card are Deleted");
+        res.status(200).json({ message: "card deleted successfully", cards });
 
     } catch (e) {
         next(e);

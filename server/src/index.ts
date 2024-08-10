@@ -15,7 +15,7 @@ connect()
 Logger.log("Express.js server with database connection, logging, error handling, and routes for users and cards, then starts it on port 8080.")
 const app = express();
 
-app.use(json());
+app.use(express.json());
 app.use(logger);
 
 app.use(cors({ origin: "*" }))

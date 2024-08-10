@@ -22,13 +22,13 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const [user, setUser] = useState<IUser | null>(null);
     const [error, setError] = useState("");
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (token) {
-    //         const parsedToken = JSON.parse(token);
-    //         setAuth(parsedToken);
-    //     }
-    // }, [])
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            // const parsedToken = JSON.parse(token);
+            setAuth(token);
+        } else setAuth(null);
+    }, [auth])
 
     useEffect(() => {
         if (auth) {
@@ -40,8 +40,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         console.log(user);
 
     }, [auth])
-    console.log(user);
-
 
     const handleSignup = async (userData: IUserInput) => {
         try {
@@ -59,6 +57,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         try {
             const res = await axios.post(`${base_url}/login`, auth);
             setAuth(res.data)
+            localStorage.setItem("token", res.data)
             return true;
         } catch (err) {
             console.error(err);
@@ -70,7 +69,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
     const handleLogout = () => {
         setAuth(null);
-        // localStorage.removeItem("auth");
+        localStorage.removeItem("token");
     };
 
     const getUserById = async (userId: string) => {

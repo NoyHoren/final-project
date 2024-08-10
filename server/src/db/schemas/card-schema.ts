@@ -35,7 +35,7 @@ const cardSchema = new Schema<ICard>({
         required: false,
         minlength: 6,
         maxlength: 20,
-        unique: true
+        unique: false
     },
     web: {
         type: String,
