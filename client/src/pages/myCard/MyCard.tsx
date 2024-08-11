@@ -13,13 +13,15 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
+import { AuthContext, AuthContextType } from '../../context/AuthContext';
 
 export const MyCard: React.FC = () => {
     const { myCards, getMyCards, deleteCard } = useContext(CardContext) as CardContextType;
+    const { auth } = useContext(AuthContext) as AuthContextType;
 
     useEffect(() => {
         getMyCards();
-    }, []);
+    }, [auth]);
 
     const handleDelete = async (id: string) => {
         const success = await deleteCard(id);
@@ -44,7 +46,7 @@ export const MyCard: React.FC = () => {
                             <CardMedia
                                 component="img"
                                 height="140"
-                                image={card.image.url}  // Assuming card.image has a url property
+                                image={card.image.url}
                                 alt={card.title}
                             />
                             <CardContent sx={{ flexGrow: 1 }}>
@@ -53,9 +55,6 @@ export const MyCard: React.FC = () => {
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     {card.subtitle}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {card.description}
                                 </Typography>
                             </CardContent>
                             <CardActions>

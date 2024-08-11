@@ -13,6 +13,7 @@ import { MyCard } from './pages/myCard/MyCard';
 import CreateCard from './pages/createCard/CreateCard';
 import AuthProvider from './context/AuthContext';
 import CardProvider from './context/CardContext';
+import SingleCard from './pages/singlePage/SingleCard';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <Signup /> },
       { path: "/myCards", element: <MyCard /> },
       { path: "/createCard", element: <CreateCard /> },
+      { path: "/singleCard/:id", element: <SingleCard /> },
     ]
   },
 ]);

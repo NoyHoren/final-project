@@ -5,6 +5,10 @@ import { AuthContext, AuthContextType } from '../../context/AuthContext';
 
 const Navigation: React.FC = () => {
     const { auth, handleLogout, user } = useContext(AuthContext) as AuthContextType;
+    const isAdminOnly = user?.isAdmin;
+    const isBusinessOnly = user?.isBusiness && !user.isAdmin;
+    console.log(isAdminOnly, isBusinessOnly)
+        ;
 
     const handleLogoutClick = () => {
         handleLogout();
@@ -25,22 +29,26 @@ const Navigation: React.FC = () => {
             <Toolbar>
                 {auth && user ? (
                     <>
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/myCards"
-                            sx={{ '&.active': { color: 'yellow' } }}
-                        >
-                            My Cards
-                        </Button>
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/CreateCard"
-                            sx={{ '&.active': { color: 'yellow' } }}
-                        >
-                            Create Card
-                        </Button>
+                        {(isAdminOnly || isBusinessOnly) &&
+                            <>
+                                <Button
+                                    color="inherit"
+                                    component={NavLink}
+                                    to="/myCards"
+                                    sx={{ '&.active': { color: 'yellow' } }}
+                                >
+                                    My Cards
+                                </Button>
+                                <Button
+                                    color="inherit"
+                                    component={NavLink}
+                                    to="/CreateCard"
+                                    sx={{ '&.active': { color: 'yellow' } }}
+                                >
+                                    Create Card
+                                </Button>
+                            </>
+                        }
                         <Button
                             color="inherit"
                             component={NavLink}

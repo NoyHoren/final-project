@@ -7,10 +7,12 @@ export interface CardContextType {
     cards: ICard[] | null
     myCards: ICard[] | null
     error: string
+    currentCard: ICard | null
     getAllCardsHandler: () => Promise<boolean>
     createCard: (card: ICardInput) => Promise<boolean>
     getMyCards: () => Promise<boolean>
     deleteCard: (cardId: string) => Promise<boolean>
+    getCardById: (cardId: string) => Promise<boolean>
 }
 
 const base_url = "http://localhost:8080/api/v1/cards";
@@ -99,7 +101,7 @@ const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }
 
 
-    return <CardContext.Provider value={{ cards, myCards, error, getAllCardsHandler, createCard, getMyCards, deleteCard }}>
+    return <CardContext.Provider value={{ cards, myCards, error, getAllCardsHandler, createCard, getMyCards, deleteCard, getCardById, currentCard }}>
         {children}
     </CardContext.Provider>;
 };

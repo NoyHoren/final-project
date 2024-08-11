@@ -8,7 +8,6 @@ import { CardContext, CardContextType } from '../../context/CardContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-// Define the validation schema using Joi
 const schema = Joi.object({
     title: Joi.string().required().label('Title'),
     subtitle: Joi.string().required().label('Subtitle'),

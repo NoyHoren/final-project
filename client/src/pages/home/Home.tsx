@@ -7,15 +7,18 @@ import {
     Typography,
     Grid,
     Box,
-    IconButton,
-    CardActions
+    CardActions,
+    Button
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { AuthContext, AuthContextType } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const Home: React.FC = () => {
-    const { getAllCardsHandler, cards } = useContext(CardContext) as CardContextType;
+    const { getAllCardsHandler, cards, getCardById } = useContext(CardContext) as CardContextType;
     const { user } = useContext(AuthContext) as AuthContextType;
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAllCardsHandler();
@@ -25,8 +28,12 @@ export const Home: React.FC = () => {
         // Implement the like functionality here
     };
 
-    const handleInfo = (id: string) => {
-        // Implement the like functionality here
+    const handleInfo = async (id: string) => {
+        // const success = await getCardById(id);
+        // if (success) {
+        //     toast.success("card fetched successfully");
+        // }
+        navigate(`/singleCard/${id}`);
     };
 
     return (
@@ -50,16 +57,27 @@ export const Home: React.FC = () => {
                                     <Typography variant="body2" color="text.secondary">
                                         {card.subtitle}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {card.description}
-                                    </Typography>
                                 </CardContent>
                                 {user &&
                                     <CardActions>
-                                        <IconButton onClick={() => handleInfo(card._id)} aria-label="info">
-                                            <InfoIcon />
-                                        </IconButton>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleInfo(card._id)}
+                                            sx={{
+                                                mt: 2,
+                                                backgroundColor: "#F7B5CA",
+                                                ':hover': {
+                                                    backgroundColor: '#ffff00',
+                                                    color: '#F7B5CA',
+                                                    fontWeight: "bold"
+                                                },
+                                            }}
+                                        >
+                                            Read More
+                                        </Button>
                                     </CardActions>
+
                                 }
                             </Card>
                         </Grid>
