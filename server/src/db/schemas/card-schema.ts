@@ -49,6 +49,7 @@ const cardSchema = new Schema<ICard>({
     image: {
         type: imageSchema, required: false
     },
+    likes: [{ type: String }],
 
     createdAt: {
         type: Date,

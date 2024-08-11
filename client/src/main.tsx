@@ -14,6 +14,7 @@ import CreateCard from './pages/createCard/CreateCard';
 import AuthProvider from './context/AuthContext';
 import CardProvider from './context/CardContext';
 import SingleCard from './pages/singlePage/SingleCard';
+import Favorites from './pages/favorites/Favorites';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/myCards", element: <MyCard /> },
       { path: "/createCard", element: <CreateCard /> },
       { path: "/singleCard/:id", element: <SingleCard /> },
+      { path: "/favorites", element: <Favorites /> },
     ]
   },
 ]);

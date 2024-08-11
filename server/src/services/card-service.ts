@@ -38,9 +38,13 @@ export const cardService = {
             throw new Error("Card not found");
         }
 
-        if (!card.likes.includes(userId)) {
+        const likeIndex = card.likes.indexOf(userId);
+        if (likeIndex === -1) {
             card.likes.push(userId);
+        } else {
+            card.likes.splice(likeIndex, 1);
         }
+
         return card.save();
     },
 

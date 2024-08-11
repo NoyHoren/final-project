@@ -78,7 +78,8 @@ router.put("/:id", validateToken, validateCard, async (req, res, next) => {
 router.patch("/:id", validateToken, async (req, res, next) => {
     try {
         const result = await cardService.likeCard(req.params.id, req.payload._id);
-        res.json(result);
+        const cards = await cardService.getAllCards();
+        res.status(200).json({ message: "card toggle liked successfully", cards });
         Logger.log('Like successfully completed')
     } catch (e) {
         next(e);

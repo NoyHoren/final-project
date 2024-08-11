@@ -8,15 +8,15 @@ import {
     Grid,
     Box,
     CardActions,
-    Button
+    Button,
+    IconButton
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import FavoriteIcon from '@mui/icons-material/Favorite'; 
 import { AuthContext, AuthContextType } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 export const Home: React.FC = () => {
-    const { getAllCardsHandler, cards, getCardById } = useContext(CardContext) as CardContextType;
+    const { getAllCardsHandler, cards, toggleLike } = useContext(CardContext) as CardContextType;
     const { user } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
 
@@ -24,15 +24,11 @@ export const Home: React.FC = () => {
         getAllCardsHandler();
     }, []);
 
-    const handleLike = (id: string) => {
-        // Implement the like functionality here
+    const handleLike = async (id: string) => {
+        await toggleLike(id);
     };
 
     const handleInfo = async (id: string) => {
-        // const success = await getCardById(id);
-        // if (success) {
-        //     toast.success("card fetched successfully");
-        // }
         navigate(`/singleCard/${id}`);
     };
 
@@ -47,7 +43,7 @@ export const Home: React.FC = () => {
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={card.image.url}  // Assuming card.image has a url property
+                                    image={card.image.url}
                                     alt={card.title}
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
@@ -59,7 +55,13 @@ export const Home: React.FC = () => {
                                     </Typography>
                                 </CardContent>
                                 {user &&
-                                    <CardActions>
+                                    <CardActions sx={{ justifyContent: 'space-between' }}>
+                                        <IconButton
+                                            onClick={() => handleLike(card._id)}
+                                            color={card.likes.includes(user._id) ? 'error' : 'default'}
+                                        >
+                                            <FavoriteIcon />
+                                        </IconButton>
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -77,7 +79,6 @@ export const Home: React.FC = () => {
                                             Read More
                                         </Button>
                                     </CardActions>
-
                                 }
                             </Card>
                         </Grid>

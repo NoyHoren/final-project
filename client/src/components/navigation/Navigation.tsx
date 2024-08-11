@@ -42,6 +42,14 @@ const Navigation: React.FC = () => {
                                 <Button
                                     color="inherit"
                                     component={NavLink}
+                                    to="/favorites"
+                                    sx={{ '&.active': { color: 'yellow' } }}
+                                >
+                                    Favorites
+                                </Button>
+                                <Button
+                                    color="inherit"
+                                    component={NavLink}
                                     to="/CreateCard"
                                     sx={{ '&.active': { color: 'yellow' } }}
                                 >

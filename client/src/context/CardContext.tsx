@@ -13,6 +13,7 @@ export interface CardContextType {
     getMyCards: () => Promise<boolean>
     deleteCard: (cardId: string) => Promise<boolean>
     getCardById: (cardId: string) => Promise<boolean>
+    toggleLike: (cardId: string) => Promise<boolean>
 }
 
 const base_url = "http://localhost:8080/api/v1/cards";
@@ -100,8 +101,24 @@ const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         }
     }
 
+    const toggleLike = async (cardId: string) => {
+        try {
+            const res = await axios.patch(`${base_url}/${cardId}`, null, {
+                headers: {
+                    'x-auth-token': auth
+                }
+            })
+            setCards(res.data.cards);
+            return true;
+        } catch (err) {
+            console.error(err);
+            setError("like card failed. Please try again.");
+            return false;
+        }
+    }
 
-    return <CardContext.Provider value={{ cards, myCards, error, getAllCardsHandler, createCard, getMyCards, deleteCard, getCardById, currentCard }}>
+
+    return <CardContext.Provider value={{ cards, myCards, error, getAllCardsHandler, createCard, getMyCards, deleteCard, getCardById, currentCard, toggleLike }}>
         {children}
     </CardContext.Provider>;
 };
