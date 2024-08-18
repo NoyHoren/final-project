@@ -38,7 +38,7 @@ const CreateCard: React.FC = () => {
         resolver: joiResolver(schema),
     });
 
-    const { createCard } = useContext(CardContext) as CardContextType;
+    const { createCard, error } = useContext(CardContext) as CardContextType;
     const navigate = useNavigate();
 
     const onSubmit = async (data: ICardInput) => {
@@ -46,11 +46,13 @@ const CreateCard: React.FC = () => {
         if (success) {
             toast.success("Card created successfully")
             navigate("/")
+        } else {
+            toast.error(error || "create card failed. Please try again.")
         }
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3, marginBottom: "100px" }}>
             <Typography variant="h4" gutterBottom>
                 Create Card
             </Typography>

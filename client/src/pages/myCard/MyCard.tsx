@@ -40,7 +40,7 @@ export const MyCard: React.FC = () => {
     return (
         <Box sx={{ margin: 3 }}>
             <Grid container spacing={2}>
-                {myCards && myCards.map(card => (
+                {myCards && myCards.length !== 0 ? myCards.map(card => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={card._id}>
                         <Card sx={{ maxWidth: 400, margin: 'auto', height: 350, display: 'flex', flexDirection: 'column' }}>
                             <CardMedia
@@ -67,7 +67,10 @@ export const MyCard: React.FC = () => {
                             </CardActions>
                         </Card>
                     </Grid>
-                ))}
+                ))
+                    :
+                    <h2>No Cards</h2>
+                }
             </Grid>
         </Box>
     );

@@ -24,13 +24,15 @@ const Login: React.FC = () => {
     });
     const navigate = useNavigate();
 
-    const { handleLogin } = useContext(AuthContext) as AuthContextType;
+    const { handleLogin, error } = useContext(AuthContext) as AuthContextType;
 
     const onSubmit = async (data: ILogin) => {
         const success = await handleLogin(data);
         if (success) {
             toast.success("logged in successfully");
             navigate("/");
+        } else {
+            toast.error(error || "Login failed");
         }
     };
 

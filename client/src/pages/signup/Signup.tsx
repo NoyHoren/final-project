@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Button, TextField, Typography, Grid, Radio, RadioGroup, FormControlLabel, FormLabel } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, set } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { IUserInput } from '../../interfaces/interfaces';
@@ -55,7 +55,7 @@ const Signup: React.FC = () => {
         },
     });
 
-    const { handleSignup } = useContext(AuthContext) as AuthContextType;
+    const { handleSignup, error } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
 
     const onSubmit = async (data: IUserInput) => {
@@ -63,6 +63,8 @@ const Signup: React.FC = () => {
         if (success) {
             toast.success("user signed up successfully");
             navigate("/login")
+        } else {
+            toast.error(error || "Signup failed");
         }
     };
 

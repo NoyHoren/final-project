@@ -48,7 +48,8 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             return true;
         } catch (err) {
             console.error(err);
-            setError("Signup failed. Please try again.");
+            //@ts-ignore
+            setError(err.response.data.message);
             return false;
         }
     }
@@ -60,8 +61,8 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             localStorage.setItem("token", res.data)
             return true;
         } catch (err) {
-            console.error(err);
-            setError("Signup failed. Please try again.");
+            //@ts-ignore
+            setError(err.response.data.message);
             return false;
         }
     }

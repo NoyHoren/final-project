@@ -3,6 +3,7 @@ import './App.css'
 import Navigation from './components/navigation/Navigation'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import Footer from './components/navigation/footer/Footer';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
     <div className='app'>
       <Navigation />
       <Outlet />
+      <Footer />
       <ToastContainer
         position="top-right"
         autoClose={5000}

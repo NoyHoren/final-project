@@ -1,14 +1,7 @@
-# Eliyahu Levi Project
-
-Email: [eliyahuofficialmusic@gmail.com](mailto:eliyahuofficialmusic@gmail.com)  
-LinkedIn: [linkedin.com/in/eliyahuofficial](https://www.linkedin.com/in/eliyahuofficial/)  
-
+# Noy Horen  Project
 
 ## Project: Express.js Server with MongoDB
 
-This project is a reliable and scalable server built with Express.js. It manages user and card data, using MongoDB for storage. The server includes middleware for logging, error handling, and cross-origin resource sharing (CORS). It's designed to be easy to maintain and expand, making it suitable for various uses.
-
-## Features
 
 ### 1.User Management
    - Registration: Users can register by providing necessary details, which are validated and stored securely in the database.
@@ -49,20 +42,3 @@ This project is a reliable and scalable server built with Express.js. It manages
 2. Set Up Environment Variables: Create a `.env` file based on the provided `.env.example` and configure your environment variables.
 3. Run the Server: Use `npm run dev` to start the server on port 8080.
 4. Use the (http://localhost:8080) link for API Documentation.
-
-## Copyright © 2024 Eliyahu Levi All Rights Reserved.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

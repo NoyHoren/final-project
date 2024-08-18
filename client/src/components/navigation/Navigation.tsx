@@ -7,8 +7,6 @@ const Navigation: React.FC = () => {
     const { auth, handleLogout, user } = useContext(AuthContext) as AuthContextType;
     const isAdminOnly = user?.isAdmin;
     const isBusinessOnly = user?.isBusiness && !user.isAdmin;
-    console.log(isAdminOnly, isBusinessOnly)
-        ;
 
     const handleLogoutClick = () => {
         handleLogout();

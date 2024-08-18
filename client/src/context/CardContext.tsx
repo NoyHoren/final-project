@@ -67,7 +67,8 @@ const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             return true;
         } catch (err) {
             console.error(err);
-            setError("create card failed. Please try again.");
+            //@ts-ignore
+            setError(err.response.data.message);
             return false;
         }
     }

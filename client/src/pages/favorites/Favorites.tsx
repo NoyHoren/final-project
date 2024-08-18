@@ -20,8 +20,8 @@ const Favorites = () => {
     };
 
     return (
-        <Grid container spacing={3} sx={{ width: "80vw" }}>
-            {cards && user && cards.filter((card) => card.likes.includes(user._id)).map((card) => (
+        <Grid container spacing={3} sx={{ width: "80vw", display: "flex", justifyContent: "center" }}>
+            {cards && user ? cards.filter((card) => card.likes.includes(user._id)).map((card) => (
                 <Grid item key={card._id} xs={12} sm={6} md={4} lg={3} >
                     <Card sx={{ width: 250, height: 350, display: 'flex', flexDirection: 'column' }}>
                         <CardMedia
@@ -62,7 +62,9 @@ const Favorites = () => {
                         </CardActions>
                     </Card>
                 </Grid>
-            ))}
+            )) :
+                <Typography variant="h6" >No Favorites</Typography>
+            }
         </Grid>
     );
 };

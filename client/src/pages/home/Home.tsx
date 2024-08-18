@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
 
     return (
         <div className='home-container'>
-            <h1>My Cards</h1>
+            <h1>Flight Mode</h1>
             <Box sx={{ margin: 3 }}>
                 <Grid container spacing={2}>
                     {cards && cards.map(card => (
